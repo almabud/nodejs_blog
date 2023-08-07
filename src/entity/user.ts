@@ -1,14 +1,16 @@
 import { UnknownError, ValidationError, ValueError } from "../errors/errors";
-import { Deserializable } from "./deserializable";
+import { BaseEntity } from "./deserializable";
 import bcrypt from 'bcrypt';
 
-export abstract class User extends Deserializable{
+
+export class User extends BaseEntity{
     id?: string;
     name?: string;
     email?: string;
     password?: string;
 
     private SALT_ROUND = 10;
+    FIELDS: string[] = ['id', 'name', 'email']
 
     async set_password(): Promise<void> {
         if (this.password == undefined || this.password == null){
@@ -24,10 +26,10 @@ export abstract class User extends Deserializable{
     async check_password(password: string): Promise<boolean> {
         try {
             const isMatch = await bcrypt.compare(password, this.password!);
-            
             return isMatch;
           } catch (error) {
             throw new ValidationError('email or password does not match.');
           }
     }
 }
+ 

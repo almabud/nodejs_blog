@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 const app = express();
 
 app.get('/', (request: Request, response: Response) => {
+    debugger;
     return response.send("Hello world")
 });
 
