@@ -8,9 +8,10 @@ export class User extends BaseEntity{
     name?: string;
     email?: string;
     password?: string;
+    authenticated: boolean = true;
 
     private SALT_ROUND = 10;
-    FIELDS: string[] = ['id', 'name', 'email']
+    FIELDS: string[] = ['id', 'name', 'email', 'createdAt', 'updatedAt']
 
     async set_password(): Promise<void> {
         if (this.password == undefined || this.password == null){
@@ -31,5 +32,14 @@ export class User extends BaseEntity{
             throw new ValidationError('email or password does not match.');
           }
     }
+}
+
+
+export class AnonymousUser extends User{
+  authenticated: boolean = false;
+
+  json(excludes?: (string | {})[]): Record<string, any> {
+    return {}
+  }
 }
  

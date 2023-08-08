@@ -1,14 +1,15 @@
 import express from "express";
 import { Request, Response } from "express";
+import { UserController } from "./controllers/user_controllers";
 
 const app = express();
 
-app.get('/', (request: Request, response: Response) => {
+app.get('/', async (request: Request, response: Response) => {
     debugger;
-    return response.send("Hello world")
+    return response.send(await new UserController(request).get_users())
 });
 
 
-app.listen(3000, ()=>{
-    console.log("Application listening at http://localhost:3000");
+app.listen(4000, ()=>{
+    console.log("Application listening at http://localhost:4000");
 })
