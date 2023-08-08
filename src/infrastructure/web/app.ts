@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
-import { UserController } from "./controllers/user_controllers";
+import { UserController } from "../../controllers/user_controllers";
 
 const app = express();
 
