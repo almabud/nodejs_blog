@@ -52,7 +52,7 @@ export function PermissionProcessor(permissions: string[]) {
                         }
                     }
                     // Get the result and process the response.
-                    result = await ResponseProcessor(request, originalMethod.apply(this, args));
+                    result = await ResponseProcessor(request, await originalMethod.apply(this, args));
                 } catch (error) {
                     if (error instanceof ResponseProcessError) {
                         throw error;

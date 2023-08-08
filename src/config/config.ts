@@ -5,6 +5,13 @@ import { BaseRequestProcessor } from "../controllers/request_processors/base_req
 import { FormatRequest } from "../controllers/request_processors/format_request";
 import { BaseResponseProcessor } from "../controllers/response_processors/base_response_processor";
 import { DeliverResponse } from "../controllers/response_processors/deliver";
+import { BaseEntity } from "../entity/deserializable";
+import { User } from "../entity/user";
+import { MongoDb } from "../infrastructure/db/mongo_db";
+import UserModel from "../infrastructure/repositories/mongoose/models/user";
+import { MongoUserRepo } from "../infrastructure/repositories/mongoose/user_repo";
+import { BaseRepo } from "../repositories/base_repo";
+import { AllowAny } from '../controllers/permission_processors/allowany';
 
 
 export class Config{
@@ -18,6 +25,10 @@ export class Config{
         new DeliverResponse()
     ];
     PERMISSION_PROCESSORS: Record<string, BasePermissionProcessor> = {
-        Authenticated: new Authenticated()
+        Authenticated: new Authenticated(),
+        AllowAny: new AllowAny()
+    };
+    REPO_MAP: Record<string, BaseRepo<BaseEntity>> = {
+        UserRepo: new MongoUserRepo(UserModel, new User())
     };
 }

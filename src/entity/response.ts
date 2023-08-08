@@ -20,11 +20,11 @@ export class SuccessResponse extends BaseResponse{
 export class ErrorResponse extends BaseResponse{
     FIELDS = ['status', 'status_code', 'headers', 'message']
 
-    json(){
+    json(excludes:(string|{}) [] = []){
         if(Object.keys(this.errors).length > 0){
             this.FIELDS.push('errors');
         }
-        
-        return super.json();
+
+        return super.json(excludes);
     }
 }
