@@ -21,8 +21,8 @@ export class BaseRequest extends Deserializable{
         'query_params', 
         'path_params', 
         'header', 
-        'createdAT', 
-        'updatedAt'
+        'created_at', 
+        'updated_at'
     ];
 }
 

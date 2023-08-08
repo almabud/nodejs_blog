@@ -8,8 +8,8 @@ export abstract class Deserializable {
 
 
 export abstract class BaseEntity extends Deserializable {
-    createdAt: Date = new Date()
-    updatedAt?: Date
+    created_at: Date = new Date()
+    updated_at?: Date
 
     FIELDS: string[] = []
     _excludes: (string | {})[] = []

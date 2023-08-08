@@ -11,7 +11,7 @@ export class User extends BaseEntity{
     authenticated: boolean = true;
 
     private SALT_ROUND = 10;
-    FIELDS: string[] = ['id', 'name', 'email', 'createdAt', 'updatedAt']
+    FIELDS: string[] = ['id', 'name', 'email', 'created_at', 'updated_at']
 
     async set_password(): Promise<void> {
         if (this.password == undefined || this.password == null){
