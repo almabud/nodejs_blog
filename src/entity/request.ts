@@ -7,7 +7,7 @@ export interface BaseHeaders{
 }
 
 export class BaseRequest extends Deserializable{
-    data = {};
+    data:{[key: string]: any} = {};
     method: 'POST' | 'PUT' | 'GET' | 'DELETE' | 'PATCH' = 'GET';
     query_params: Object = {};
     path_params: Object = {};

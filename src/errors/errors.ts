@@ -1,10 +1,10 @@
 export class BaseException extends Error{
     status_code?: number;
-    errors: {[key: string]: string[]} = {}
+    errors:  {[key: string]: string[]} = {}
 
     constructor(message?: string, errors: {[key: string]: string[]} = {}) {
         super(message || '');
-        this.errors = this.errors;
+        this.errors = errors;
         Object.setPrototypeOf(this, new.target.prototype);
     }
 

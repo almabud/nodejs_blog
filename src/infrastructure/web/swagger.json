@@ -1,0 +1,33 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a simple blog site application.",
+        "version": "1.0.0",
+        "title": "Blog Site API"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:3080",
+    "basePath": "/api",
+    "paths": {
+        "/users/": {
+            "get": {
+                "summary": "Get all users",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": []
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

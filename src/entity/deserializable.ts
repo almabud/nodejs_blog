@@ -1,7 +1,15 @@
 export abstract class Deserializable {
-    deserialize(input: any): this {
+    deserialize(input: { [key: string]: any }): this {
+        let formated_object: { [key: string]: any } = {}
+        // Remove unneccessary data from the input object.
+        // Object.assign() include the extra data to the new object.
+        for (const field of Object.keys(this)) {
+            if(field !== field.toUpperCase() && field in input){
+                formated_object[field] = input[field];
+            }
+        }
         // console.log(input);
-        Object.assign(this, input);
+        Object.assign(this, formated_object);
         return this;
     }
 }
@@ -12,12 +20,10 @@ export abstract class BaseEntity extends Deserializable {
     updated_at?: Date
 
     FIELDS: string[] = []
-    _excludes: (string | {})[] = []
+    EXCLUDES: (string | {})[] = []
 
     json(excludes: (string | {})[] = []): Record<string, any> {
-        if (excludes.length === 0) {
-            excludes = this._excludes;
-        }
+        excludes = [...this.EXCLUDES, ...excludes];
         let cur_excludes: string[] = [];
         let sub_excludes: { [key: string]: string[] } = {};
         let fields = this.FIELDS.length == 0 ? Object.keys(this) : this.FIELDS;
