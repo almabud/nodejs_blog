@@ -17,6 +17,11 @@ export class SuccessResponse extends BaseResponse{
 }
 
 
+export class CreateSuccessResponse extends SuccessResponse{
+    status_code = 201;
+}
+
+
 export class ErrorResponse extends BaseResponse{
     FIELDS = ['status', 'status_code', 'headers', 'message']
 

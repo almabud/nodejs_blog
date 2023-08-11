@@ -2,6 +2,7 @@ import { User } from "../entity/user";
 import { ValidationError } from "../errors/errors";
 import { UserRepo } from "../repositories/user_repo";
 import { BaseService } from "./base_service";
+import { validateEmail } from "./validators/validators";
 
 
 export class CreateUserService implements BaseService {
@@ -26,19 +27,28 @@ export class CreateUserService implements BaseService {
                 errors[field] = ['This field is required']
             }
         }
-        if(Object.keys(errors).length > 0){
+        if (Object.keys(errors).length > 0) {
             throw new ValidationError('', errors);
         }
     }
 
     private async validate(data: { [key: string]: any }) {
         this.validate_required(data);
-        if (data['password'] === data['confirm_password']) {
+        if (data['password'] != data['confirm_password']) {
             throw new ValidationError('', { 'password': [`confirm_password doesn't match.`] });
         }
+        // validate email.
+        if (!validateEmail(data['email'])) {
+            throw new ValidationError('', { 'email': ['Provide a valid email.'] })
+        }
         // Duplicate email validation.
-        if (await this.repo.get({ 'email': data['email'] })) {
+        try {
+            await this.repo.get({ 'email': data['email'] });
             throw new ValidationError('', { 'email': [`A account with this email (${data['email']}) already exists.`] })
+        } catch (error) {
+            if(error instanceof ValidationError){
+                throw error;
+            }
         }
 
         return data;

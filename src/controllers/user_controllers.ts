@@ -1,4 +1,4 @@
-import { SuccessResponse } from "../entity/response";
+import { CreateSuccessResponse, SuccessResponse } from "../entity/response";
 import { User } from "../entity/user";
 import { CreateUserService } from "../services/createuser_service";
 import { GetUserService } from "../services/user_service";
@@ -18,6 +18,6 @@ export class UserController extends BaseController{
     async register_user(){
         let service = new CreateUserService(this.request?.config.REPO_MAP["UserRepo"]);
         let data = await service.execute(this.request?.data);
-        return data;
+        return new CreateSuccessResponse().deserialize({'data': data});
     }
 }
