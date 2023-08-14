@@ -109,10 +109,9 @@ export function RequestProcessor<T extends { new(...args: any[]): {} }>(construc
                 // Process the request.
                 for (const processor of config.REQUEST_PROCESSORS) {
                     request = await processor.process(request);
+                    // Add the request to the controller.
+                    this.request = request;
                 }
-                // Request processing is complete now intialize the contorller.
-                // Add the request to the controller.
-                this.request = request;
             } catch (error) {
                 if (error instanceof UnknownError) {
                     throw error;
