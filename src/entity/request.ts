@@ -20,7 +20,7 @@ export class BaseRequest extends Deserializable{
         'method', 
         'query_params', 
         'path_params', 
-        'header', 
+        'headers', 
         'created_at', 
         'updated_at'
     ];

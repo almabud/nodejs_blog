@@ -7,6 +7,10 @@ import { BaseRequest } from '../../entity/request'
  */
 export class FormatRequest implements BaseRequestProcessor {
     async process(request: { [key: string]: any } | BaseRequest): Promise<BaseRequest> {
-        return new BaseRequest().deserialize({'data': request['body'], ...request})
+        return new BaseRequest().deserialize(Object.assign(
+            {},
+            { 'headers': request.headers, 'data': request.body },
+            request
+        ))
     }
 }

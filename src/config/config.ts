@@ -9,17 +9,26 @@ import { BaseEntity } from "../entity/deserializable";
 import { User } from "../entity/user";
 import { MongoDb } from "../infrastructure/db/mongo_db";
 import UserModel from "../infrastructure/repositories/mongoose/models/user";
-import { MongoUserRepo } from "../infrastructure/repositories/mongoose/user_repo";
-import { BaseRepo } from "../repositories/base_repo";
+import { MongoUserRepo } from '../infrastructure/repositories/mongoose/user_repo';
+import { BaseRepo, DefaultRepo } from "../repositories/base_repo";
 import { AllowAny } from '../controllers/permission_processors/allowany';
+import { AuthenticateService } from "../services/authenticate_service";
+import { JwtTokenRepo } from "../infrastructure/repositories/mongoose/token_repo";
 
 
-export class Config{
+export class Config {
     SECRETE: string = 'ec307071-721e-43bf-9f04-13a3824944fe';
 
+    REPO_MAP: Record<string, BaseRepo<BaseEntity>> = {
+        UserRepo: new MongoUserRepo(UserModel, new User()),
+        TokenRepo: new JwtTokenRepo(UserModel)
+    };
     REQUEST_PROCESSORS: BaseRequestProcessor[] = [
         new FormatRequest(),
-        new Authenticate()
+        new Authenticate(new AuthenticateService(
+            <MongoUserRepo>this.REPO_MAP['UserRepo'],
+            <JwtTokenRepo>this.REPO_MAP['TokenRepo']
+        ))
     ];
     RESPONSE_PROCESSORS: BaseResponseProcessor[] = [
         new DeliverResponse()
@@ -27,8 +36,5 @@ export class Config{
     PERMISSION_PROCESSORS: Record<string, BasePermissionProcessor> = {
         Authenticated: new Authenticated(),
         AllowAny: new AllowAny()
-    };
-    REPO_MAP: Record<string, BaseRepo<BaseEntity>> = {
-        UserRepo: new MongoUserRepo(UserModel, new User())
     };
 }

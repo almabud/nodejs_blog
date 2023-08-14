@@ -25,6 +25,12 @@ app.use('/swagger/', swaggerUi.serveFiles(swaggerDocument), swaggerUi.setup(swag
 
 app.use('/users', userRouter);
 
+app.post('/login', async (request, response)=> {
+    let finalRes = await new UserController(request).login();
+
+    return response.status(finalRes['status_code']).send(finalRes)
+})
+
 
 
 app.listen(4000, ()=>{

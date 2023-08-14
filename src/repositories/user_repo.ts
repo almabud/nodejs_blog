@@ -1,4 +1,4 @@
 import { User } from "../entity/user";
-import { BaseRepo } from "./base_repo";
+import { DefaultRepo } from "./base_repo";
 
-export interface UserRepo extends BaseRepo<User>{}
+export interface UserRepo extends DefaultRepo<User>{}
