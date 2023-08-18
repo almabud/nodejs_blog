@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { User as UserEntity } from "../../../../entity/user";
 
 const userSchema = new Schema<UserEntity>({

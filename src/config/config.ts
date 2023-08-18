@@ -7,13 +7,15 @@ import { BaseResponseProcessor } from "../controllers/response_processors/base_r
 import { DeliverResponse } from "../controllers/response_processors/deliver";
 import { BaseEntity } from "../entity/deserializable";
 import { User } from "../entity/user";
-import { MongoDb } from "../infrastructure/db/mongo_db";
 import UserModel from "../infrastructure/repositories/mongoose/models/user";
 import { MongoUserRepo } from '../infrastructure/repositories/mongoose/user_repo';
 import { BaseRepo, DefaultRepo } from "../repositories/base_repo";
 import { AllowAny } from '../controllers/permission_processors/allowany';
 import { AuthenticateService } from "../services/authenticate_service";
 import { JwtTokenRepo } from "../infrastructure/repositories/mongoose/token_repo";
+import { MongoPostRepo } from "../infrastructure/repositories/post_repo";
+import postModel from "../infrastructure/repositories/mongoose/models/post";
+import { Post } from "../entity/post";
 
 
 export class Config {
@@ -21,7 +23,8 @@ export class Config {
 
     REPO_MAP: Record<string, BaseRepo<BaseEntity>> = {
         UserRepo: new MongoUserRepo(UserModel, new User()),
-        TokenRepo: new JwtTokenRepo(UserModel)
+        TokenRepo: new JwtTokenRepo(UserModel),
+        PostRepo: new MongoPostRepo(postModel, new Post())
     };
     REQUEST_PROCESSORS: BaseRequestProcessor[] = [
         new FormatRequest(),

@@ -7,6 +7,7 @@ import morgan from "morgan";
 
 import { UserController } from "../../controllers/user_controllers";
 import { userRouter } from "./routes/users";
+import { postRouter } from "./routes/post";
 
 const app = express();
 
@@ -24,6 +25,8 @@ const swaggerDocument = JSON.parse(swaggerData);
 app.use('/swagger/', swaggerUi.serveFiles(swaggerDocument), swaggerUi.setup(swaggerDocument, { explorer: true }));
 
 app.use('/users', userRouter);
+
+app.use('/posts', postRouter);
 
 app.post('/login', async (request, response)=> {
     let finalRes = await new UserController(request).login();
