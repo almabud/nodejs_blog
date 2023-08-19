@@ -24,6 +24,17 @@ export class MongoBaseRepo<T>{
 
     }
 
+    async get(filters:{}): Promise<T>{
+        try{
+            const data = await this.model.findOne(filters);
+            const res = <T> await this.format_data(data!);
+            
+            return res;
+        } catch (error){
+            throw new NotFoundError();
+        }
+    };
+
     async get_by_id(id: string): Promise<T> {
         try {
             const data = <Document>await this.model.findById(id = id);
