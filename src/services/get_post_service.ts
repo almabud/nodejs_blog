@@ -1,9 +1,9 @@
 import { Post } from '../entity/post';
 import { PostRepo } from '../repositories/post_repo';
-import { BaseService } from './base_service';
+import { PostService } from './post_service';
 
 
-export class GetPostService implements BaseService{
+export class GetPostService implements PostService{
     repo: PostRepo;
     
     constructor(repo: PostRepo){

@@ -10,7 +10,8 @@ postRouter
 .get('/', async (request, response) => {
     return response.send(await new UserPostController(request).get_posts())
 })
-// .post('/', async(request, response) => {
-//     let finalRes = await new UserController(request).register_user();
-//     return response.status(finalRes['status_code']).send(finalRes)
-// })
+.post('/', async(request, response) => {
+    let finalRes = await new UserPostController(request).create_post();
+    
+    return response.status(finalRes['status_code']).send(finalRes)
+})
