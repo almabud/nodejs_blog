@@ -60,10 +60,16 @@ export abstract class BaseEntity extends Deserializable {
 
     /**
      * This method is responsible to convert entity to json object.
-     * @param excludes this param example
+     * @param options this param example
      *  - ['exclude_field_name1', 'exclude_field_name2', ...]
      *  - ['exclude_field_name1', {'exclude_field_name2': ['exclude_field_name3', ...]}]
      *  - ['exclude_field_name1', {'exclude_field_name2': ['exclude_field_name3', {'exclude_file_name4': ['exclude_field_name5', ..]}, ...]}]
+     * this is the example of excluedes but for fields this format will be the same. Now generate the options param.
+     * {
+     *     "excludes": [excludes_like_above],
+     *     "fields": [fields_like_above]
+     * }
+     * this two attributes are optional.
      * @returns {}
      */
     json(options: { [key: string]: any } = { 'excludes': [], 'fields': [] }): Record<string, any> {
