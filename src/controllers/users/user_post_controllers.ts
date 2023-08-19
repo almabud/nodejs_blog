@@ -11,7 +11,12 @@ export class UserPostController extends BaseController{
         let service = new GetPostService(this.request?.config.REPO_MAP['PostRepo']);
         let data = await service.execute();
 
-        return new SuccessResponse().deserialize({"data": data})
+        return new SuccessResponse().deserialize({
+            'data': data, 
+            'EXCLUDES': [{
+                'data': [{'author': ['created_at', 'updated_at']}]
+            }]
+        });
     }
 
     @PermissionProcessor(['Authenticated'])
